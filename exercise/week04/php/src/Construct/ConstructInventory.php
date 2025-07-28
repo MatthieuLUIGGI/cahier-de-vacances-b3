@@ -15,46 +15,20 @@ class ConstructInventory
     public function updateSimulation(): void
     {
         foreach ($this->artefacts as $artefact) {
-            if ($artefact->name !== "Aged Signal" &&
-                $artefact->name !== "Backdoor Pass to TAFKAL80ETC Protocol") {
-
-                if ($artefact->integrity > 0 && $artefact->name !== "Sulfuras Core Fragment") {
-                    $artefact->integrity--;
-                }
-
-            } else {
-                if ($artefact->integrity < 50) {
-                    $artefact->integrity++;
-
-                    if ($artefact->name === "Backdoor Pass to TAFKAL80ETC Protocol") {
-                        if ($artefact->timeToLive < 11 && $artefact->integrity < 50) {
-                            $artefact->integrity++;
-                        }
-                        if ($artefact->timeToLive < 6 && $artefact->integrity < 50) {
-                            $artefact->integrity++;
-                        }
-                    }
-                }
-            }
-
-            if ($artefact->name !== "Sulfuras Core Fragment") {
-                $artefact->timeToLive--;
-            }
-
-            if ($artefact->timeToLive < 0) {
-                if ($artefact->name !== "Aged Signal") {
-                    if ($artefact->name !== "Backdoor Pass to TAFKAL80ETC Protocol") {
-                        if ($artefact->integrity > 0 && $artefact->name !== "Sulfuras Core Fragment") {
-                            $artefact->integrity--;
-                        }
-                    } else {
-                        $artefact->integrity = 0;
-                    }
-                } elseif ($artefact->integrity < 50) {
-                    $artefact->integrity++;
-                }
-            }
+            $updater = $this->getUpdaterFor($artefact);
+            $updater->update($artefact);
         }
+    }
+
+    private function getUpdaterFor(Artefact $artefact): ArtefactUpdater
+    {
+        return match (true) {
+            $artefact->name === "Aged Signal" => new AgedSignalUpdater(),
+            $artefact->name === "Sulfuras Core Fragment" => new SulfurasUpdater(),
+            $artefact->name === "Backdoor Pass to TAFKAL80ETC Protocol" => new BackdoorPassUpdater(),
+            $artefact->name === "Stealth Cloak v2.0" => new StealthCloakUpdater(),
+            default => new DefaultArtefactUpdater(),
+        };
     }
 
     public function getArtefacts(): array
