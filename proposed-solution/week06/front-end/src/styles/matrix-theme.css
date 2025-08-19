@@ -1,0 +1,266 @@
+:root {
+  --matrix-dark: #000000;
+  --matrix-darker: #050505;
+  --matrix-light: #00ff00;
+  --matrix-bright: #00ff87;
+  --matrix-highlight: #7fff7f;
+  --matrix-orange: #ff8a00;
+  --matrix-red: #ff2b2b;
+  --matrix-success: #00ff00;
+  --matrix-font: 'Courier New', monospace;
+  --matrix-glow: 0 0 10px rgba(0, 255, 0, 0.8), 0 0 20px rgba(0, 255, 0, 0.5);
+  --matrix-glow-strong: 0 0 10px rgba(0, 255, 0, 1), 0 0 20px rgba(0, 255, 0, 0.8), 0 0 30px rgba(0, 255, 0, 0.6);
+  --matrix-error-glow: 0 0 15px rgba(255, 43, 43, 1), 0 0 30px rgba(255, 43, 43, 0.8), 0 0 45px rgba(255, 43, 43, 0.6);
+  --matrix-success-glow: 0 0 10px rgba(0, 255, 0, 1), 0 0 20px rgba(0, 255, 0, 0.8), 0 0 30px rgba(0, 255, 0, 0.6);
+}
+
+@keyframes matrix-pulse {
+  0% {
+    box-shadow: 0 0 5px var(--matrix-light), 0 0 10px var(--matrix-light);
+  }
+  50% {
+    box-shadow: 0 0 15px var(--matrix-light), 0 0 25px var(--matrix-light);
+  }
+  100% {
+    box-shadow: 0 0 5px var(--matrix-light), 0 0 10px var(--matrix-light);
+  }
+}
+
+@keyframes matrix-error-pulse {
+  0% {
+    box-shadow: 0 0 10px var(--matrix-red), 0 0 20px var(--matrix-red);
+  }
+  50% {
+    box-shadow: 0 0 30px var(--matrix-red), 0 0 60px var(--matrix-red);
+  }
+  100% {
+    box-shadow: 0 0 10px var(--matrix-red), 0 0 20px var(--matrix-red);
+  }
+}
+
+@keyframes matrix-success-pulse {
+  0% {
+    box-shadow: 0 0 5px var(--matrix-success), 0 0 10px var(--matrix-success);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--matrix-success), 0 0 40px var(--matrix-success);
+  }
+  100% {
+    box-shadow: 0 0 5px var(--matrix-success), 0 0 10px var(--matrix-success);
+  }
+}
+
+@keyframes alarm-flash {
+  0% {
+    background-color: var(--matrix-dark);
+  }
+  25% {
+    background-color: rgba(255, 43, 43, 0.5);
+  }
+  50% {
+    background-color: var(--matrix-dark);
+  }
+  75% {
+    background-color: rgba(255, 43, 43, 0.5);
+  }
+  100% {
+    background-color: var(--matrix-dark);
+  }
+}
+
+@keyframes matrix-code-fall {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+@keyframes success-animation {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes digital-fall {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.matrix-container {
+  min-height: 100vh;
+  background-color: var(--matrix-dark);
+  color: var(--matrix-light);
+  font-family: var(--matrix-font);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+
+.matrix-panel {
+  background-color: var(--matrix-darker);
+  border: 1px solid var(--matrix-light);
+  border-radius: 5px;
+  padding: 2rem;
+  box-shadow: var(--matrix-glow);
+  width: 100%;
+  max-width: 50%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.matrix-title {
+  color: var(--matrix-bright);
+  text-align: center;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: var(--matrix-glow);
+}
+
+.matrix-input {
+  background-color: rgba(5, 5, 5, 0.8);
+  border: 1px solid var(--matrix-light);
+  color: var(--matrix-highlight);
+  padding: 0.75rem;
+  border-radius: 4px;
+  width: 100%;
+  margin-bottom: 1rem;
+  transition: all 0.3s;
+  font-family: var(--matrix-font);
+}
+
+.matrix-input:focus {
+  outline: none;
+  box-shadow: var(--matrix-glow-strong);
+}
+
+.matrix-button {
+  background-color: transparent;
+  border: 1px solid var(--matrix-light);
+  color: var(--matrix-light);
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+  font-family: var(--matrix-font);
+  margin-top: 1rem;
+  display: block;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.matrix-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 0, 0.2),
+    transparent
+  );
+  transition: all 0.6s;
+}
+
+.matrix-button:hover {
+  box-shadow: var(--matrix-glow);
+  border-color: var(--matrix-bright);
+  color: var(--matrix-bright);
+}
+
+.matrix-button:hover::before {
+  left: 100%;
+}
+
+.matrix-error {
+  color: var(--matrix-red);
+  margin-top: 1rem;
+  text-shadow: 0 0 8px rgba(255, 43, 43, 1);
+  animation: matrix-error-pulse 1.5s infinite;
+  font-weight: bold;
+}
+
+.matrix-success {
+  color: var(--matrix-success);
+  margin-top: 1rem;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.8);
+  animation: matrix-success-pulse 2s infinite;
+}
+
+.matrix-error-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.matrix-error-list li {
+  color: var(--matrix-red);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(255, 43, 43, 0.8);
+}
+
+.matrix-success-animation {
+  animation: success-animation 2s infinite;
+}
+
+.alarm-animation {
+  animation: alarm-flash 0.3s infinite;
+  position: relative;
+}
+
+@media (max-width: 992px) {
+  .matrix-panel {
+    padding: 1.5rem;
+    max-width: 70%;
+  }
+  
+  .matrix-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .matrix-panel {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+  
+  .matrix-title {
+    font-size: 1.3rem;
+  }
+}
