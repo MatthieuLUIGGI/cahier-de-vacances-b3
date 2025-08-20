@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS Rules (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Regex TEXT NOT NULL CHECK (LENGTH(Regex) <= 50),
+    Description TEXT NOT NULL CHECK (LENGTH(Description) <= 100),
+    IsActive INTEGER NOT NULL CHECK (IsActive IN (0, 1))
+);

@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Dapper" Version="2.1.66" />
+        <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.5" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.5" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.5" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+        <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\FirewallCracker.Core\FirewallCracker.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="scripts\CreateSchema.sql">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="scripts\SeedRules.sql">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+</Project>
